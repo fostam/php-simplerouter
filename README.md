@@ -22,10 +22,10 @@ $> composer require fostam/simplerouter
 
 include "vendor/autoload.php";
 
-$router = new \SimpleRouter\Router();
+$router = new Fostam\SimpleRouter\Router();
 
-$router->createRoute('/user/{id}', \SimpleRouter\Http::METHOD_GET, '\MyProject\GetUser');
-$router->createRoute('/user', \SimpleRouter\Http::METHOD_POST, '\MyProject\CreateUser');
+$router->createRoute('/user/{id}', Fostam\SimpleRouter\Http::METHOD_GET, '\MyProject\GetUser');
+$router->createRoute('/user', Fostam\SimpleRouter\Http::METHOD_POST, '\MyProject\CreateUser');
 
 $router->resolve();
 $router->sendResult();
