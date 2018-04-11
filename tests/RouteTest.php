@@ -1,14 +1,13 @@
 <?php
 
+namespace Fostam\SimpleRouter\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Fostam\SimpleRouter\Processor;
 use Fostam\SimpleRouter\Route;
 use Fostam\SimpleRouter\Http;
 
-/**
- * @covers Route
- */
-final class RouteTest extends TestCase {
+class RouteTest extends TestCase {
     public function testCanBeCreated() {
         /** @var Processor|PHPUnit_Framework_MockObject_MockObject $processor*/
         $processor = $this->getMockBuilder(Processor::class)->getMock();
@@ -23,17 +22,17 @@ final class RouteTest extends TestCase {
      * @param $path
      * @param $method
      *
-     * @dataProvider testCreateExceptionsProvider
+     * @dataProvider createExceptionsProvider
      */
     public function testCreateExceptions($path, $method) {
         /** @var Processor|PHPUnit_Framework_MockObject_MockObject $processor*/
         $processor = $this->getMockBuilder(Processor::class)->getMock();
 
-        $this->expectException(Fostam\SimpleRouter\Exception\InternalApiException::class);
+        $this->expectException(\Fostam\SimpleRouter\Exception\InternalApiException::class);
         Route::create($path, $method, $processor);
     }
 
-    public function testCreateExceptionsProvider() {
+    public function createExceptionsProvider() {
         return [
             ['', Http::METHOD_GET],
             ['/test', 'test'],
@@ -132,7 +131,7 @@ final class RouteTest extends TestCase {
      * @param $inputPath
      * @param $expectedValues
      *
-     * @dataProvider testParamParsingProvider
+     * @dataProvider paramParsingProvider
      */
     public function testParamParsing($path, $inputPath, $expectedValues) {
         /** @var Processor|PHPUnit_Framework_MockObject_MockObject $processor*/
@@ -146,7 +145,7 @@ final class RouteTest extends TestCase {
     }
 
 
-    public function testParamParsingProvider() {
+    public function paramParsingProvider() {
         return [
             ['/path/{param}', '/path/test', ['param' => 'test']],
             ['/path/{param}/{test:\d+}', '/path/test/123', ['param' => 'test', 'test' => '123']],

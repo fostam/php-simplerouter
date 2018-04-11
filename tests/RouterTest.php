@@ -1,20 +1,19 @@
 <?php
 
+namespace Fostam\SimpleRouter\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Fostam\SimpleRouter\Processor;
 use Fostam\SimpleRouter\Router;
 use Fostam\SimpleRouter\Http;
 
-/**
- * @covers Router
- */
-final class RouterTest extends TestCase {
+class RouterTest extends TestCase {
     /**
      * @param $inputPath
      * @param $inputMethod
      * @param $expectedResult
      *
-     * @dataProvider testResolveTargetProvider
+     * @dataProvider resolveTargetProvider
      */
     public function testResolveTarget($inputPath, $inputMethod, $expectedResult) {
         // build routes
@@ -44,7 +43,7 @@ final class RouterTest extends TestCase {
         $router->resolve($inputPath, $inputMethod);
     }
 
-    public function testResolveTargetProvider() {
+    public function resolveTargetProvider() {
         return [
             ['/path', Http::METHOD_GET, 1],
             ['/path', Http::METHOD_POST, 2],
