@@ -76,7 +76,7 @@ class GetUsers extends Processor {
         try {
             $data = $this->myUserModel->getUser(intval($userID));
         } catch (\Exception $e) {
-            throw new InternalApiException("error getting data for user {$userID}, Http::CODE_INTERNAL_SERVER_ERROR, $e);
+            throw new InternalApiException("error getting data for user {$userID}", Http::CODE_INTERNAL_SERVER_ERROR, $e);
         }
 
         $this->setResponseData(
