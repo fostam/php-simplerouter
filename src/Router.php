@@ -93,7 +93,7 @@ class Router {
         }
         catch (InternalApiException $e) {
             $this->responseObj->setCode($e->getCode());
-            if ($this->responseObj->getType() === Response::TYPE_JSON) {
+            if ($this->getReponseType() === Response::TYPE_JSON) {
                 $this->responseObj->addResponseData($this->opts[self::OPT_KEY_ERROR_CODE], $this->responseObj->getCode());
                 $this->responseObj->addResponseData($this->opts[self::OPT_KEY_ERROR_MESSAGE], $this->opts[self::OPT_INTERNAL_ERROR_MSG]);
             }
@@ -101,7 +101,7 @@ class Router {
         }
         catch (UserApiException $e) {
             $this->responseObj->setCode($e->getCode());
-            if ($this->responseObj->getType() === Response::TYPE_JSON) {
+            if ($this->getReponseType() === Response::TYPE_JSON) {
                 $this->responseObj->addResponseData($this->opts[self::OPT_KEY_ERROR_CODE], $this->responseObj->getCode());
                 $this->responseObj->addResponseData($this->opts[self::OPT_KEY_ERROR_MESSAGE], $e->getMessage());
             }
@@ -323,11 +323,22 @@ class Router {
             return;
         }
 
-        if ($this->responseObj->getType() === Response::TYPE_JSON) {
+        if ($this->getReponseType() === Response::TYPE_JSON) {
             print json_encode($this->responseObj->getData());
         }
         else {
             print $this->responseObj->getData();
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function getReponseType() {
+        if (!is_null($this->responseObj->getType())) {
+            return $this->responseObj->getType();
+        }
+
+        return $this->opts[self::OPT_RESPONSE_TYPE_DEFAULT];
     }
 }
