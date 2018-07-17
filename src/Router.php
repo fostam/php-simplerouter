@@ -320,18 +320,11 @@ class Router {
             return;
         }
 
-        switch ($this->responseObj->getType()) {
-            case Response::TYPE_PLAIN:
-            case Response::TYPE_HTML:
-                print $this->responseObj->getData();
-                break;
-
-            case Response::TYPE_JSON:
-                print json_encode($this->responseObj->getData());
-                break;
-
-            default:
-                throw new InternalApiException("unknown response type '{$this->responseObj->getType()}'");
+        if ($this->responseObj->getType() === Response::TYPE_JSON) {
+            print json_encode($this->responseObj->getData());
+        }
+        else {
+            print $this->responseObj->getData();
         }
     }
 }
