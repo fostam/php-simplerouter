@@ -203,6 +203,7 @@ class Router {
      * @param array $routeConfig
      *
      * @return Route
+     * @throws InternalApiException
      */
     public function importRoute($routeConfig) {
         $route = new Route($routeConfig);
@@ -216,6 +217,7 @@ class Router {
      * @param mixed     $processor
      *
      * @return Route
+     * @throws InternalApiException
      */
     public function createRoute($path, $method, $processor) {
         $route = Route::create($path, $method, $processor);
@@ -265,6 +267,7 @@ class Router {
 
     /**
      * @throws UserApiException
+     * @throws InternalApiException
      */
     private function resolvePath() {
         $allowedMethods = [];
@@ -295,7 +298,7 @@ class Router {
     }
 
     /**
-     *
+     * @throws InternalApiException
      */
     private function collectOptions() {
         $this->responseObj->setCode(Http::CODE_OK);

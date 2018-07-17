@@ -59,6 +59,7 @@ class Route {
      *
      * @return Route
      * @internal param $processorClass
+     * @throws InternalApiException
      */
     public static function create($path, $method, $processor) {
         return new Route(
@@ -208,7 +209,13 @@ class Route {
                 throw new InternalApiException("processor class arguments must be an array");
             }
 
-            $ref = new \ReflectionClass($processor[0]);
+            try {
+                $ref = new \ReflectionClass($processor[0]);
+            }
+            catch (\ReflectionException $e) {
+                throw new InternalApiException("error getting processor class", 0, $e);
+            }
+
             /** @var Processor $obj */
             $obj = $ref->newInstanceArgs($processor[1]);
             return $obj;
