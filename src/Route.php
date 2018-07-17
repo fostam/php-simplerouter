@@ -129,7 +129,7 @@ class Route {
         }
 
         // for HEAD requests to GET routes assume match, too
-        if ($method == Http::METHOD_HEAD && $this->config[self::METHOD] == Http::METHOD_GET) {
+        if ($method === Http::METHOD_HEAD && $this->config[self::METHOD] === Http::METHOD_GET) {
             return true;
         }
 

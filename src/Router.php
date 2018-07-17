@@ -93,7 +93,7 @@ class Router {
         }
         catch (InternalApiException $e) {
             $this->responseObj->setCode($e->getCode());
-            if ($this->responseObj->getType() == Response::TYPE_JSON) {
+            if ($this->responseObj->getType() === Response::TYPE_JSON) {
                 $this->responseObj->addResponseData($this->opts[self::OPT_KEY_ERROR_CODE], $this->responseObj->getCode());
                 $this->responseObj->addResponseData($this->opts[self::OPT_KEY_ERROR_MESSAGE], $this->opts[self::OPT_INTERNAL_ERROR_MSG]);
             }
@@ -101,7 +101,7 @@ class Router {
         }
         catch (UserApiException $e) {
             $this->responseObj->setCode($e->getCode());
-            if ($this->responseObj->getType() == Response::TYPE_JSON) {
+            if ($this->responseObj->getType() === Response::TYPE_JSON) {
                 $this->responseObj->addResponseData($this->opts[self::OPT_KEY_ERROR_CODE], $this->responseObj->getCode());
                 $this->responseObj->addResponseData($this->opts[self::OPT_KEY_ERROR_MESSAGE], $e->getMessage());
             }
@@ -181,7 +181,7 @@ class Router {
             throw new InternalApiException("illegal option {$option}");
         }
 
-        if ($option == self::OPT_RESPONSE_TYPE_DEFAULT && !isset($this->contentTypes[$value])) {
+        if ($option === self::OPT_RESPONSE_TYPE_DEFAULT && !isset($this->contentTypes[$value])) {
             throw new InternalApiException("illegal response type {$value}");
         }
 
