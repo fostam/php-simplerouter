@@ -145,6 +145,9 @@ class Router {
             if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $this->responseObj->corsGetOrigins())) {
                 $this->responseObj->setHeader('Access-Control-Allow-Origin', $_SERVER['HTTP_ORIGIN']);
             }
+            else if (in_array('*', $this->responseObj->corsGetOrigins())) {
+                $this->responseObj->setHeader('Access-Control-Allow-Origin', '*');
+            }
         }
 
         // send response code
