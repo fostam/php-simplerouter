@@ -71,8 +71,13 @@ class Router {
             }
 
             // set content type header based on response type, unless the header had been set already
-            if (!$this->responseObj->isHeaderSet('Content-Type')) {
+            if (!$this->responseObj->isHeaderSet('Content-Type') && !is_null($this->responseObj->getData())) {
                 $this->responseObj->setHeader('Content-Type', $this->responseObj->getType());
+            }
+
+            // set location
+            if ($location = $this->responseObj->getLocationPath()) {
+                $this->responseObj->setHeader('Location', $this->opts[self::OPT_REQUEST_PATH_PREFIX] . $location);
             }
 
             // set default return code
@@ -150,9 +155,9 @@ class Router {
             }
         }
 
-        // set location
-        if ($location = $this->responseObj->getLocationPath()) {
-            header('Location: ' . $this->opts[self::OPT_REQUEST_PATH_PREFIX] . $location);
+        // clear PHP's default Content-Type header, if not set explicitly
+        if (!$this->responseObj->isHeaderSet('Content-Type')) {
+            header('Content-Type:');
         }
 
         // send response code
