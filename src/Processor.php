@@ -19,9 +19,9 @@ abstract class Processor {
     /**
      * Processor constructor.
      *
-     * @param $path
-     * @param $method
-     * @param $params
+     * @param string $path
+     * @param string $method
+     * @param string[] $params
      * @param Response $responseObj
      */
     public function init($path, $method, $params, Response $responseObj) {
@@ -71,14 +71,14 @@ abstract class Processor {
     }
 
     /**
-     * @param $data
+     * @param mixed $data
      */
     protected function setResponseData($data) {
         $this->responseObj->setData($data);
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     protected function getPathParams() {
         return $this->params;
@@ -87,7 +87,7 @@ abstract class Processor {
     /**
      * @param $param
      *
-     * @return bool
+     * @return string|false
      */
     protected function getPathParam($param) {
         if (!isset($this->params[$param])) {
@@ -98,7 +98,7 @@ abstract class Processor {
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     protected function getQueryParams() {
         return $_GET;
@@ -107,7 +107,7 @@ abstract class Processor {
     /**
      * @param $param
      *
-     * @return bool
+     * @return string|false
      */
     protected function getQueryParam($param) {
         if (!isset($_GET[$param])) {
@@ -118,16 +118,16 @@ abstract class Processor {
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     protected function getPostParams() {
         return $_POST;
     }
 
     /**
-     * @param $param
+     * @param string $param
      *
-     * @return bool
+     * @return string|false
      */
     protected function getPostParam($param) {
         if (!isset($_POST[$param])) {
