@@ -175,7 +175,7 @@ class Response {
     }
 
     /**
-     * @param $header
+     * @param string $header
      */
     public function corsAddAllowedHeader($header) {
         $prevValue = '';
@@ -195,7 +195,7 @@ class Response {
     }
 
     /**
-     * @param $maxAgeSeconds
+     * @param int $maxAgeSeconds
      */
     public function corsSetMaxAge($maxAgeSeconds) {
         $this->setHeader('Access-Control-Max-Age', intval($maxAgeSeconds));
