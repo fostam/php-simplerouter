@@ -17,12 +17,6 @@ class Router {
     const OPT_INTERNAL_ERROR_MSG    = 'OPT_INTERNAL_ERROR_MSG';
     const OPT_CORS_PERMISSIVE       = 'OPT_CORS_PERMISSIVE';
 
-    private $contentTypes = [
-        Response::TYPE_JSON  => 'application/json',
-        Response::TYPE_PLAIN => 'text/plain',
-        Response::TYPE_HTML  => 'text/html',
-    ];
-
     private $opts = [
         self::OPT_REQUEST_PATH_PREFIX   => false,
         self::OPT_RESPONSE_TYPE_DEFAULT => Response::TYPE_HTML,
@@ -78,7 +72,7 @@ class Router {
 
             // set content type header based on response type, unless the header had been set already
             if (!$this->responseObj->isHeaderSet('Content-Type')) {
-                $this->responseObj->setHeader('Content-Type', $this->contentTypes[$this->responseObj->getType()]);
+                $this->responseObj->setHeader('Content-Type', $this->responseObj->getType());
             }
 
             // set default return code
@@ -181,7 +175,7 @@ class Router {
             throw new InternalApiException("illegal option {$option}");
         }
 
-        if ($option === self::OPT_RESPONSE_TYPE_DEFAULT && !isset($this->contentTypes[$value])) {
+        if ($option === self::OPT_RESPONSE_TYPE_DEFAULT && !is_string($value)) {
             throw new InternalApiException("illegal response type {$value}");
         }
 
