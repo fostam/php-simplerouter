@@ -99,9 +99,9 @@ Following options are available:
 |-----------------------------------|----------------------------------------|-------------------------|
 | Router::OPT_REQUEST_PATH_PREFIX   | prefix that is truncated from the path | false                   |
 | Router::OPT_RESPONSE_TYPE_DEFAULT | default response type                  | Response::TYPE_HTML     |
-| Router::OPT_KEY_ERROR_MESSAGE     | key in result JSON for error message   | 'error.message          |
-| Router::OPT_KEY_ERROR_CODE        | key in result JSON for error code      | 'error.code'            |
-| Router::OPT_INTERNAL_ERROR_MSG    | error message text for internal errors | 'internal server error' |
+| Router::OPT_KEY_ERROR_MESSAGE     | key in result JSON for error message   | "error.message"         |
+| Router::OPT_KEY_ERROR_CODE        | key in result JSON for error code      | "error.code"            |
+| Router::OPT_INTERNAL_ERROR_MSG    | error message text for internal errors | "internal server error" |
 | Router::OPT_CORS_PERMISSIVE       | permissive CORS mode                   | false                   |
 
 #### addRoute()
@@ -116,7 +116,7 @@ Creates a `Route` object from the given parameters, adds it to the list of route
 `Route` documentation for a description of the parameters.
 
 #### resolve()
-`void resolve(string $path = '', string $method ='')`
+`void resolve(string $path = '', string $method = '')`
 
 Resolve the given path/method and execute the matching processor.
 If `$path` is empty, `$_SERVER['SCRIPT_NAME']` is used as path.
@@ -324,6 +324,8 @@ had been set before, an additional header line for the same header is added.
 #### isHeaderSet()
 `bool isHeaderSet(string $header)`
 
+Returns whether the header `$header` has been set or not.
+
 #### getHeader()
 `array getHeader(string $header)`
 
@@ -401,4 +403,4 @@ Set an array of allowed headers.
 #### corsSetMaxAge()
 `void corsSetMaxAge(int $maxAgeSeconds)`
 
-Set the maximum age used for the _Access-Control-Max-Age_ header.
+Set the maximum age in seconds used for the _Access-Control-Max-Age_ header.
