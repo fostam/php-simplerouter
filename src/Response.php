@@ -67,21 +67,13 @@ class Response {
      */
     public function setHeader($header, $value, $append = false) {
         $headerIdent = self::getHeaderIdent($header);
-        if (!isset($this->headers[$headerIdent])) {
-            // seen for the first time
+        if (!$append || !isset($this->headers[$headerIdent])) {
             $this->headers[$headerIdent] = [
                 self::HEADER_NAME => $header,
-                self::HEADER_VALUES => [$value],
+                self::HEADER_VALUES => [],
             ];
         }
-        else {
-            // existing header
-            if (!$append) {
-                // clear if not in append mode
-                $this->headers[$headerIdent][self::HEADER_VALUES] = [];
-            }
-            $this->headers[$headerIdent][self::HEADER_VALUES][] = $value;
-        }
+        $this->headers[$headerIdent][self::HEADER_VALUES][] = $value;
     }
 
     /**
