@@ -18,7 +18,7 @@ class Router {
     const OPT_CORS_PERMISSIVE       = 'OPT_CORS_PERMISSIVE';
 
     private $opts = [
-        self::OPT_REQUEST_PATH_PREFIX   => false,
+        self::OPT_REQUEST_PATH_PREFIX   => '',
         self::OPT_RESPONSE_TYPE_DEFAULT => Response::TYPE_HTML,
         self::OPT_KEY_ERROR_MESSAGE     => 'error.message',
         self::OPT_KEY_ERROR_CODE        => 'error.code',
@@ -148,6 +148,11 @@ class Router {
             else if (in_array('*', $this->responseObj->corsGetOrigins())) {
                 $this->responseObj->setHeader('Access-Control-Allow-Origin', '*');
             }
+        }
+
+        // set location
+        if ($location = $this->responseObj->getLocationPath()) {
+            header('Location: ' . $this->opts[self::OPT_REQUEST_PATH_PREFIX] . $location);
         }
 
         // send response code

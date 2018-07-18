@@ -88,6 +88,32 @@ class GetUsers extends Processor {
 }
 ```
 
+An example class for creating a user:
+
+```php
+class CreateUser extends Processor {
+    public function execute() {
+        $data = $this->getJSONPostData();
+        if (!isset($data['name'])) {
+            throw new UserApiException("parameter 'name' is missing");
+        }
+
+        try {
+            $userID = $this->myUserModel->createUser($data);
+        } catch (\Exception $e) {
+            throw new InternalApiException("error creating user", Http::CODE_INTERNAL_SERVER_ERROR, $e);
+        }
+                
+        // send "201 Created"
+        $this->setResponseCode(Http::CODE_CREATED);
+        
+        // send the location of the new object as header
+        // here: 'Location: /myproject/api/users/123' (for $userID=123)
+        $this->getResponseObject()->setLocationPath($this->getPath() . '/' . $userID);
+    }
+}
+```
+
 ## Reference
 ### Router
 #### setOption()
@@ -97,7 +123,7 @@ Following options are available:
 
 | Option                            | Value                                  | Default Value           |
 |-----------------------------------|----------------------------------------|-------------------------|
-| Router::OPT_REQUEST_PATH_PREFIX   | prefix that is truncated from the path | false                   |
+| Router::OPT_REQUEST_PATH_PREFIX   | prefix that is truncated from the path | ""                      |
 | Router::OPT_RESPONSE_TYPE_DEFAULT | default response type                  | Response::TYPE_HTML     |
 | Router::OPT_KEY_ERROR_MESSAGE     | key in result JSON for error message   | "error.message"         |
 | Router::OPT_KEY_ERROR_CODE        | key in result JSON for error code      | "error.code"            |
@@ -314,6 +340,27 @@ for `Response::TYPE_HTML` or any other response type.
 `mixed getData()`
 
 Get the current data.
+
+#### setLocationPath()
+`void setLocationPath(string $path)`
+
+Set a location path. This path prefixed with `Router::OPT_REQUEST_PATH_PREFIX`, if set, and then sent as _Location_
+header.
+
+Example:
+
+```php
+$router->setOption(Router::OPT_REQUEST_PATH_PREFIX, '/test/api');
+...
+$this->getResponseObject->setLocationPath('/users');
+...
+Location: /test/api/users
+```
+
+#### getLocationPath()
+`string getLocationPath()`
+
+Get the location path.
 
 #### setHeader()
 `void setHeader(string $header, string $value, bool $append = false)`

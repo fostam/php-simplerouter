@@ -15,6 +15,7 @@ class Response {
     private $code;
     private $data;
     private $type;
+    private $location;
     private $headers = [];
     private $origins = [];
 
@@ -58,6 +59,20 @@ class Response {
      */
     public function getData() {
         return $this->data;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setLocationPath($path) {
+        $this->location = $path;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocationPath() {
+        return $this->location;
     }
 
     /**
