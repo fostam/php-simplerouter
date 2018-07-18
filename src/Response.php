@@ -94,6 +94,9 @@ class Response {
         return trim(strtolower($header));
     }
 
+    /**
+     * @param $header
+     */
     public function clearHeader($header) {
         unset($this->headers[self::getHeaderIdent($header)]);
     }
