@@ -16,6 +16,7 @@ class Router {
     const OPT_KEY_ERROR_CODE        = 'OPT_KEY_ERROR_CODE';
     const OPT_INTERNAL_ERROR_MSG    = 'OPT_INTERNAL_ERROR_MSG';
     const OPT_CORS_PERMISSIVE       = 'OPT_CORS_PERMISSIVE';
+    const OPT_JSON_FORMATTED        = 'OPT_JSON_FORMATTED';
 
     private $opts = [
         self::OPT_REQUEST_PATH_PREFIX   => '',
@@ -24,6 +25,7 @@ class Router {
         self::OPT_KEY_ERROR_CODE        => 'error.code',
         self::OPT_INTERNAL_ERROR_MSG    => 'internal server error',
         self::OPT_CORS_PERMISSIVE       => false,
+        self::OPT_JSON_FORMATTED        => false,
     ];
 
     private $path;
@@ -331,7 +333,11 @@ class Router {
         }
 
         if ($this->getReponseType() === Response::TYPE_JSON || $this->getReponseType() === Response::TYPE_JSONAPI) {
-            print json_encode($this->responseObj->getData());
+            $options = 0;
+            if ($this->opts[self::OPT_JSON_FORMATTED]) {
+                $options = JSON_PRETTY_PRINT;
+            }
+            print json_encode($this->responseObj->getData(), $options);
         }
         else {
             print $this->responseObj->getData();
