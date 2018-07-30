@@ -8,9 +8,10 @@ class Response {
     const HEADER_NAME   = 'HEADER_NAME';
     const HEADER_VALUES = 'HEADER_VALUES';
 
-    const TYPE_JSON  = 'application/json';
-    const TYPE_PLAIN = 'text/plain';
-    const TYPE_HTML  = 'text/html';
+    const TYPE_JSON    = 'application/json';
+    const TYPE_JSONAPI = 'application/vnd.api+json';
+    const TYPE_PLAIN   = 'text/plain';
+    const TYPE_HTML    = 'text/html';
 
     private $code;
     private $data;

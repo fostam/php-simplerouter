@@ -330,7 +330,7 @@ class Router {
             return;
         }
 
-        if ($this->getReponseType() === Response::TYPE_JSON) {
+        if ($this->getReponseType() === Response::TYPE_JSON || $this->getReponseType() === Response::TYPE_JSONAPI) {
             print json_encode($this->responseObj->getData());
         }
         else {
